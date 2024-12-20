@@ -11,12 +11,13 @@ import lombok.Setter;
 import java.util.Date;
 import java.util.Set;
 
+@Entity
 @Getter
 @Setter
-@Entity
-@Table(name = "courses")
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "courses")
+
 public class Courses extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,5 +50,11 @@ public class Courses extends BaseEntity{
     @Column(name = "duration", nullable = false)
     private String duration;
 
-
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "courses_stakeholder",
+            joinColumns = @JoinColumn(name = "courses_id"),
+            inverseJoinColumns = @JoinColumn(name = "stakeholder_id")
+    )
+    private Set<Stakeholder> stakeholderSet;
 }

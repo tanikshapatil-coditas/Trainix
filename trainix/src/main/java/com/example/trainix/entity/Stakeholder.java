@@ -19,7 +19,4 @@ public class Stakeholder {
 
     @Column(name = "stakeholder_name")
     private String name;
-
-
-
 }

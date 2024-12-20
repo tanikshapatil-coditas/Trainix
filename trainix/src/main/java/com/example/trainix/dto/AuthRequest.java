@@ -8,13 +8,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
+@NoArgsConstructor
 public class AuthRequest {
+
     @Column(name = "username", nullable = false, unique = true)
     @NotBlank(message = "Username is required")
-    private String username;
+    private String email;
 
     @Column(name = "password", nullable = false)
     @NotBlank(message = "Password is required")

@@ -30,4 +30,7 @@ public class Role {
             inverseJoinColumns = @JoinColumn(name = "permission_id")
     )
     private Set<Permission> permissionsSet;
+
+    public Role(String superAdmin) {
+    }
 }

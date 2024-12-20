@@ -12,12 +12,11 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDto {
+public class GetAllUsersResponse {
     private String firstName;
     private String lastName;
     private String email;
-    private Set<String> techStack;
     private Location location;
-    private Boolean isAdmin;
-    private String profilePic;
+    private Set<String> roles;
+    private Set<String> techStack;
 }
