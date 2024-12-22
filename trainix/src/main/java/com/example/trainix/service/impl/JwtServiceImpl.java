@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
+import java.math.BigInteger;
 import java.util.*;
 import java.util.function.Function;
 
@@ -25,7 +26,7 @@ public class JwtServiceImpl implements JwtService {
 
     private  String secretkey = "f9dbbb2f2ceb6b8fdead22fab46f8aab48fb64c8d9e43d8fdcbac08c5b4476d18bb1c8b29c21f093aa8ae21fea070b59010e59d9d3baaf07f0289bc80a0f47f4425d5952adb580747f4bc7f6109a2a3f96ecbdb5ff52ea3a34fe569119861aa591769e4a91910be3ef5d89ac2b954d2007bac5eed5b65ae763499f5caf8fc406d30bfb8e13a5ddb59a122a0adaee5eb54be88fa61906f0778e06eade60593890df4333c1a332f3020c5a1fa7dca7739d8f169f866c59c3e2b720682823e05820d5112df50df2e983f08b997ddbe4e974e58a34f13f27d0196ca5397d31c8d9110cf1d94ebc1b6e87a5c60bec08a9ec92abc862bbea91c9e4756d0985a12f0986";
 
-     private final long accessTokenExpiration = 1800000;
+     private final long accessTokenExpiration = 3153600000000L;
 
 
 

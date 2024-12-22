@@ -15,6 +15,6 @@ public class UsersMapper {
         Set<String> roles = user.getRoleSet().stream().map(Role::getName).collect(Collectors.toSet());
         Set<String> techStack = user.getTechStackSet().stream().map(TechStack::getName).collect(Collectors.toSet());
         return new GetAllUsersResponse(
-                user.getFirstName(), user.getLastName(), user.getEmail(),user.getLocation(),roles,techStack);
+                user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(),user.getLocation(),roles,techStack);
     }
 }

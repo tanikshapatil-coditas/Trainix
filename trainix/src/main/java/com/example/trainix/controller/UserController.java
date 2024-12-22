@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin
 @RestController
 @RequestMapping("/api/users")
@@ -41,4 +43,11 @@ public class UserController {
         userService.deleteUser(id);
         return ResponseUtil.delete("User deleted successfully!!",HttpStatus.NO_CONTENT);
     }
+
+    @GetMapping("/getAllTrainers")
+    public ResponseEntity<ApiResponse<List<Users>>> getAllTrainers() {
+        List<Users> trainers = userService.getAllTrainers();
+        return ResponseUtil.success(trainers,"Trainers retrieved successfully!!");
+    }
+
 }

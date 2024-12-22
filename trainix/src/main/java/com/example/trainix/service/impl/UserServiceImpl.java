@@ -23,10 +23,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.NoSuchElementException;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -57,7 +54,6 @@ public class UserServiceImpl implements UserService {
         userRepository.findByEmail(userDto.getEmail()).ifPresent(users -> {
             throw new UsernameExistsException();
         });
-
 
         Users user = new Users();
         user.setFirstName(userDto.getFirstName());
@@ -140,18 +136,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public Users updateUser(Long id, UpdateUserDto updateUserDto) {
         Users users = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User does not exist"));
+        if (users.getIsDeleted()) {
+            throw new RuntimeException("User has been deleted and cannot be updated.");
+        }
         users.setFirstName(updateUserDto.getFirstName());
         users.setLastName(updateUserDto.getLastName());
         users.setEmail(updateUserDto.getEmail());
         users.setLocation(updateUserDto.getLocation());
-        users.setProfilePic(updateUserDto.getProfilePic());
-        Set<Role> roles = new HashSet<>();
-        for (String i : updateUserDto.getRoles()) {
-            Role role = roleRepository.findByName(i.toUpperCase()).orElseThrow(() -> new RuntimeException("ROLE " + i + " NOT FOUND!!"));
-            roles.add(role);
-        }
-        users.setRoleSet(roles);
-
         Set<TechStack> techStackSet = new HashSet<>();
         for (String i : updateUserDto.getTechStacks()) {
             TechStack techStack = techStackRepository.findByName(i.toUpperCase()).orElseThrow(() -> new NoSuchElementException("Tech Stack '" + techStackSet + "' not found"));
@@ -162,10 +153,21 @@ public class UserServiceImpl implements UserService {
         return users;
     }
 
+    //4.Delete user
     @Override
     public void deleteUser(Long id) {
         Users users = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User with id " + id + " does not exist"));
+        if (users.getIsDeleted()) {
+            throw new RuntimeException("User has been deleted and cannot be updated.");
+        }
         users.setIsDeleted(true);
         userRepository.save(users);
     }
+
+    //5.Get all trainers
+    @Override
+    public List<Users> getAllTrainers() {
+        return userRepository.findAllTrainers();
+    }
+
 }

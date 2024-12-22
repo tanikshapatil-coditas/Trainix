@@ -41,14 +41,6 @@ public class Courses extends BaseEntity{
     @Column(name = "status", nullable = false)
     private Status status;
 
-    @Column(name = "start_date", nullable = false)
-    private Date startDate;
-
-    @Column(name = "end_date", nullable = false)
-    private Date endDate;
-
-    @Column(name = "duration", nullable = false)
-    private String duration;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(

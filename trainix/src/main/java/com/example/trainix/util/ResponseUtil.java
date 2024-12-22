@@ -12,10 +12,11 @@ public class ResponseUtil {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    public static ResponseEntity<UserApiResponse> delete(String message, HttpStatus status) {
+        public static ResponseEntity<UserApiResponse> delete(String message, HttpStatus status) {
         UserApiResponse response = new UserApiResponse(HttpStatus.NO_CONTENT.value(), message, System.currentTimeMillis());
         return new ResponseEntity<>(response, HttpStatus.NO_CONTENT);
     }
+
 
     public static <T> ResponseEntity<ApiResponse<T>> error(T data, String message, HttpStatus status) {
         ApiResponse<T> response = new ApiResponse<>(data, status.value(), message);
@@ -32,6 +33,7 @@ public class ResponseUtil {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
+
     public static ResponseEntity<UserApiResponse> updated(String message, HttpStatus status) {
         UserApiResponse response = new UserApiResponse(HttpStatus.OK.value(), message, System.currentTimeMillis());
         return new ResponseEntity<>(response, HttpStatus.OK);
@@ -41,7 +43,5 @@ public class ResponseUtil {
         ApiResponse<T> response = new ApiResponse<>(data, HttpStatus.OK.value(), message);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
-
 
 }

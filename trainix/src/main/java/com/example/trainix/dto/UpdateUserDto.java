@@ -16,8 +16,6 @@ public class UpdateUserDto {
     private String firstName;
     private String lastName;
     private String email;
-    private Set<String> roles;
     private Set<String> techStacks;
     private Location location;
-    private String profilePic;
 }
