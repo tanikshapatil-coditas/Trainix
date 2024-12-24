@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class EvaluationMapper {
 
-    public EvaluationDto toDto(Evaluation evaluation) {
+    public EvaluationDto toDto(Evaluation evaluation,EvaluationDto evaluationDto) {
         if (evaluation == null) {
             return null;
         }

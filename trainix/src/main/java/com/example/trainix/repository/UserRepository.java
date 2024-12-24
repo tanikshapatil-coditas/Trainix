@@ -26,6 +26,7 @@ public interface UserRepository extends JpaRepository<Users, Long> {
     @Query(value = "SELECT DISTINCT u.* FROM users u JOIN user_role ur ON u.id = ur.users_id JOIN roles r ON ur.role_id = r.id WHERE r.role_name = 'TRAINER'", nativeQuery = true)
     List<Users> findAllTrainers();
 
+    @Query(value = "SELECT * FROM users WHERE is_deleted = false", nativeQuery = true)
     List<Users> findByIsDeletedFalse();
 }
 

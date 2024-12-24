@@ -21,4 +21,6 @@ public class CourseDto {
     private Location location;
     private Status status;
     private Set<Long> stakeholderIds;
+    public CourseDto(Long id, String courseName, Long id1, String concat, String courseDescription, Location location, Status status, Set<Long> stakeholderIds) {
+    }
 }

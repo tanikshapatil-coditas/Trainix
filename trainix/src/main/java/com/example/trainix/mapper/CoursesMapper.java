@@ -1,11 +1,13 @@
 package com.example.trainix.mapper;
 
 import com.example.trainix.dto.CourseDto;
+import com.example.trainix.dto.CourseResponseDto;
 import com.example.trainix.dto.CourseStatusUpdateDto;
 import com.example.trainix.entity.Courses;
 import com.example.trainix.entity.Stakeholder;
 import com.example.trainix.entity.Users;
-import com.example.trainix.enums.Status;
+import com.example.trainix.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
@@ -13,6 +15,9 @@ import java.util.stream.Collectors;
 
 @Component
 public class CoursesMapper {
+
+    @Autowired
+    private UserRepository userRepository;
 
     public CourseDto convertToDto(Courses course) {
         Set<Long> stakeholderIds = course.getStakeholderSet().stream()
@@ -28,6 +33,23 @@ public class CoursesMapper {
                 stakeholderIds
         );
     }
+    public CourseResponseDto convertToResponseDto(Courses course) {
+        Set<String> stakeholders = course.getStakeholderSet().stream()
+                .map(Stakeholder::getName)
+                .collect(Collectors.toSet());
+
+        return new CourseResponseDto(
+                course.getId(),
+                course.getCourseName(),
+                course.getTrainer().getId(),
+                course.getTrainer().getFirstName().concat(" ").concat(course.getTrainer().getLastName()),
+                course.getLocation().toString(),
+                stakeholders,
+                course.getStatus().toString(),
+                course.getCourseDescription()
+                );
+    }
+
 
     public Courses convertToEntity(CourseDto courseDto, Users trainer, Set<Stakeholder> stakeholders) {
         Courses course = new Courses();

@@ -1,10 +1,14 @@
 package com.example.trainix.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class EvaluationDto {
     private Long id;
     private Long courseId;
@@ -17,6 +21,4 @@ public class EvaluationDto {
     private Double proactiveness;
     private Double rating;
     private String comments;
-    private Boolean isEditable;
-    private Boolean isDeletable;
 }

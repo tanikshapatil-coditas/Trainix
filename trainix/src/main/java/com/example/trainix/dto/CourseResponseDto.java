@@ -1,17 +1,13 @@
 package com.example.trainix.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 public class CourseResponseDto {
     private Long id;
@@ -19,8 +15,18 @@ public class CourseResponseDto {
     private Long trainerId;
     private String trainerName;
     private String location;
-    private Set<Long> stakeholderIds;
+    private Set<String> stakeholders;
     private String status;
     private String description;
-    private List<String> students;
+
+    public CourseResponseDto(Long id, String courseName, Long trainerId, String trainerName, String location, Set<String> stakeholders, String status, String description) {
+        this.id = id;
+        this.courseName = courseName;
+        this.trainerId = trainerId;
+        this.trainerName = trainerName;
+        this.location = location;
+        this.stakeholders = stakeholders;
+        this.status = status;
+        this.description = description;
+    }
 }

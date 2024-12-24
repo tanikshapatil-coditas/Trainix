@@ -1,6 +1,8 @@
 package com.example.trainix.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,5 +21,7 @@ public class TechStack {
     private Long id;
 
     @Column(name = "tech_stack_name")
+    @NotEmpty(message = "Tech stack should not be empty")
+    @NotBlank(message = "Tech stack should not be blank")
     private String name;
 }

@@ -2,8 +2,11 @@ package com.example.trainix.service;
 
 import com.example.trainix.dto.AddStudentsDto;
 import com.example.trainix.dto.CourseDto;
+import com.example.trainix.dto.CourseResponseDto;
 import com.example.trainix.dto.CourseStatusUpdateDto;
 import com.example.trainix.entity.Courses;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -18,5 +21,6 @@ public interface CourseService {
 
     void addStudentsToCourse(Long courseId, AddStudentsDto addStudentsDto);
 
+    Page<CourseResponseDto> searchCourses(String courseName, String trainerName, String stakeholderName, Pageable pageable);
 
 }

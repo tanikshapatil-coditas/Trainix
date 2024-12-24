@@ -46,20 +46,8 @@ public class EvaluationServiceImpl {
     public List<EvaluationDto> getEvaluationsByUserId(Long userId) {
         List<Evaluation> evaluations = evaluationRepository.findByStudentIdAndIsDeletedFalse(userId);
         List<EvaluationDto> evaluationDtos = evaluations.stream()
-                .map(evaluationMapper::toDto)
+                .map(evaluation -> evaluationMapper.toDto(evaluation,new EvaluationDto()))
                 .collect(Collectors.toList());
-        if (!evaluations.isEmpty()) {
-            Evaluation latestEvaluation = evaluations.get(0);
-            for (EvaluationDto dto : evaluationDtos) {
-                if (dto.getId().equals(latestEvaluation.getId())) {
-                    dto.setIsEditable(true);
-                    dto.setIsDeletable(true);
-                } else {
-                    dto.setIsEditable(false);
-                    dto.setIsDeletable(false);
-                }
-            }
-        }
         return evaluationDtos;
     }
 

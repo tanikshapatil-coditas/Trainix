@@ -2,6 +2,7 @@ package com.example.trainix.service.impl;
 
 import com.example.trainix.dto.AddStudentsDto;
 import com.example.trainix.dto.CourseDto;
+import com.example.trainix.dto.CourseResponseDto;
 import com.example.trainix.dto.CourseStatusUpdateDto;
 import com.example.trainix.entity.Courses;
 import com.example.trainix.entity.Role;
@@ -14,6 +15,8 @@ import com.example.trainix.repository.StakeholderRepository;
 import com.example.trainix.repository.UserRepository;
 import com.example.trainix.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -116,6 +119,7 @@ public class CourseServiceImpl implements CourseService {
         courseRepository.save(course);
     }
 
+    //5.Add students to course
     @Override
     public void addStudentsToCourse(Long courseId, AddStudentsDto addStudentsDto) {
         Courses course = courseRepository.findById(courseId)
@@ -133,5 +137,21 @@ public class CourseServiceImpl implements CourseService {
             }
         }
         userRepository.saveAll(students);
+    }
+
+    //6.Search courses API
+    @Override
+    public Page<CourseResponseDto> searchCourses(String courseName, String trainerName, String stakeholderName, Pageable pageable) {
+        Page<Courses> coursesPage;
+        if (courseName != null) {
+            coursesPage = courseRepository.findByCourseName(courseName, pageable);
+        } else if (trainerName != null) {
+            coursesPage = courseRepository.findCoursesByTrainerName(trainerName, pageable);
+        } else if (stakeholderName != null) {
+            coursesPage = courseRepository.findCoursesByStakeholderName(stakeholderName, pageable);
+        } else {
+            coursesPage = courseRepository.findAll(pageable);
+        }
+        return coursesPage.map(coursesMapper::convertToResponseDto);
     }
 }

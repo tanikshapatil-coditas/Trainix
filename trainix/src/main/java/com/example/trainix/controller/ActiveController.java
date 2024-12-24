@@ -1,6 +1,6 @@
 package com.example.trainix.controller;
 
-import com.example.trainix.dto.CourseDto;
+import com.example.trainix.dto.CourseResponseDto;
 import com.example.trainix.dto.EvaluationDto;
 import com.example.trainix.dto.GetAllUsersResponse;
 import com.example.trainix.entity.Courses;
@@ -14,10 +14,12 @@ import com.example.trainix.repository.EvaluationRepository;
 import com.example.trainix.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,7 +44,7 @@ public class ActiveController {
     @Autowired
     EvaluationMapper evaluationMapper;
 
-
+//    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN')")
     @GetMapping("/users")
     public ResponseEntity<List<GetAllUsersResponse>> getAllActiveUsers() {
         List<Users> users = userRepository.findByIsDeletedFalse();
@@ -52,24 +54,23 @@ public class ActiveController {
         return ResponseEntity.ok(usersDtos);
     }
 
-
+//    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN','TRAINER','STUDENT')")
     @GetMapping("/courses")
-    public ResponseEntity<List<CourseDto>> getAllActiveCourses() {
+    public ResponseEntity<List<CourseResponseDto>> getAllActiveCourses() {
         List<Courses> courses = courseRepository.findByIsDeletedFalse();
-        List<CourseDto> coursesDtos = courses.stream()
-                .map(coursesMapper::convertToDto)
+        List<CourseResponseDto> coursesDtos = courses.stream()
+                .map(coursesMapper::convertToResponseDto)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(coursesDtos);
     }
 
     @GetMapping("/evaluations")
+//    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN','TRAINER','STUDENT')")
     public ResponseEntity<List<EvaluationDto>> getAllActiveEvaluations() {
-        List<Evaluation> evaluations = evaluationRepository.findByIsDeletedFalse();
-        List<EvaluationDto> evaluationDtos = evaluations.stream()
-                .map(evaluationMapper::toDto)
+        List<EvaluationDto> evaluationDtos = evaluationRepository.findByIsDeletedFalse().stream()
+                .sorted(Comparator.comparing(Evaluation::getCreatedAt).reversed())
+                .map(evaluation -> evaluationMapper.toDto(evaluation,new EvaluationDto()))
                 .collect(Collectors.toList());
         return ResponseEntity.ok(evaluationDtos);
     }
-
-
 }

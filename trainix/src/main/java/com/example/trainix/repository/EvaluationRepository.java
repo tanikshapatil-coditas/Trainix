@@ -9,6 +9,7 @@ import java.util.List;
 @Repository
 public interface EvaluationRepository extends JpaRepository<Evaluation, Long> {
 
+
     List<Evaluation> findByStudentIdAndIsDeletedFalse(Long studentId);
 
     List<Evaluation> findByStudentId(Long studentId);
